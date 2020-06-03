@@ -27,6 +27,8 @@ import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.util.unit.DataSize;
 
+import java.io.IOException;
+
 // This annotation tells Spring to auto-wire your application
 @EnableAutoConfiguration
 // This annotation tells Spring to look for controllers, etc.
@@ -61,6 +63,17 @@ public class Application {
 
 		// Return the configuration to setup multipart in the container
 		return factory.createMultipartConfig();
+	}
+
+	@Bean
+	public VideoFileManager initVideoFileManager() {
+		VideoFileManager videoFileManager = null;
+		try {
+			videoFileManager = VideoFileManager.get();
+		} catch (IOException e) {
+			System.out.println("IOException in VideoFileManager");
+		}
+		return videoFileManager;
 	}
 
 }
